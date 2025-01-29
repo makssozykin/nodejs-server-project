@@ -32,8 +32,8 @@ export const getAllStudents = async ({
   //-- що дозволяє ефективніше використовувати ресурси і скоротити час відповіді сервера
   //-- обидві операції запускаються одночасно
   const [studentsCount, students] = await Promise.all([
-    await StudentsCollection.find().merge(studentsQuery).countDocuments(),
-    await studentsQuery
+    StudentsCollection.find().merge(studentsQuery).countDocuments(),
+    studentsQuery
       .skip(skip)
       .limit(limit)
       .sort({ [sortBy]: sortOrder })
