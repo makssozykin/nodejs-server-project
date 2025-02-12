@@ -17,6 +17,7 @@ import {
   patchStudentController,
 } from '../controllers/students.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import { upload } from '../middlewares/multer.js';
 
 const router = Router();
 
@@ -31,15 +32,10 @@ router.get(
   ctrlWrapper(getStudentByIdController),
 );
 
-// router.post(
-//   '/register',
-//   validateBody(createStudentSchema),
-//   ctrlWrapper(createStudentController),
-// );
-
 router.post(
   '/',
   checkRoles(ROLES.TEACHER, ROLES.PARENT),
+  upload.single('photo'),
   validateBody(createStudentSchema),
   ctrlWrapper(createStudentController),
 );
@@ -53,8 +49,9 @@ router.delete(
 
 router.put(
   '/:studentId',
-  isValidId,
   checkRoles(ROLES.TEACHER, ROLES.PARENT),
+  isValidId,
+  upload.single('photo'),
   validateBody(createStudentSchema),
   ctrlWrapper(upsertStudentController),
 );
@@ -63,6 +60,7 @@ router.patch(
   '/:studentId',
   checkRoles(ROLES.TEACHER, ROLES.PARENT),
   isValidId,
+  upload.single('photo'),
   validateBody(updateStudentSchema),
   ctrlWrapper(patchStudentController),
 );
