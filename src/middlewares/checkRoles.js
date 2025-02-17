@@ -4,7 +4,7 @@ import { ROLES } from '../constants/index.js';
 
 export const checkRoles =
   (...roles) =>
-  async (req, resizeBy, next) => {
+  async (req, res, next) => {
     const { user } = req;
     if (!user) {
       next(createHttpError(401));
